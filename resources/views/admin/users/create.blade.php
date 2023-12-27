@@ -65,7 +65,7 @@
                 </select>
                 @error('gender')
                 <span class="text-danger">{{ $message }}</span>
-            @enderror
+                @enderror
             </div>
 
             <div class="input-group input-group-static mb-4">

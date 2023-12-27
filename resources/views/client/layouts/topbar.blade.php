@@ -36,13 +36,13 @@
             </a>
         </div>
         <div class="col-lg-6 col-6 text-left">
-            <form action="">
+            <form action="{{ route('search.products') }}" method="GET">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for products">
+                    <input type="text" name="query" class="form-control" placeholder="Search for products">
                     <div class="input-group-append">
-                        <span class="input-group-text bg-transparent text-primary">
+                        <button type="submit" class="input-group-text bg-transparent text-primary">
                             <i class="fa fa-search"></i>
-                        </span>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -52,9 +52,9 @@
                 <i class="fas fa-heart text-primary"></i>
                 <span class="badge">0</span>
             </a>
-            <a href="" class="btn border">
+            <a href="{{ route('show.cart') }}" class="btn border">
                 <i class="fas fa-shopping-cart text-primary"></i>
-                <span class="badge">0</span>
+                <span id="cart-quantity-badge" class="badge">{{ count((array) session('cart')) }}</span>
             </a>
         </div>
     </div>

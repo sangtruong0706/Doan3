@@ -18,14 +18,42 @@ class ProductController extends Controller
         $products = $this->product->getBy($request->all(), $categoryId);
         return view('client.products.index', compact('products'));
     }
-    // public function filterByPrice(Request $request, $categoryId)
+    // public function filterProducts(Request $request, $category)
     // {
     //     $minPrice = $request->input('min_price');
     //     $maxPrice = $request->input('max_price');
 
-    //     $filteredProducts = $this->product->getByPriceRange($categoryId, $minPrice, $maxPrice);
+    //     // Nếu $minPrice và $maxPrice là chuỗi rỗng, gán giá trị null
+    //     $minPrice = empty($minPrice) ? null : $minPrice;
+    //     $maxPrice = empty($maxPrice) ? null : $maxPrice;
 
-    //     return response()->json(['products' => $filteredProducts, 'categoryId' => $categoryId]);
+    //     // Thực hiện truy vấn lấy sản phẩm theo giá và danh mục
+    //     $filteredProducts = Product::with('categories')
+    //         ->whereHas('categories', function ($query) use ($category) {
+    //             $query->where('id', $category);
+    //         })
+    //         ->when($minPrice !== null, function ($query) use ($minPrice) {
+    //             $query->where('price', '>=', $minPrice);
+    //         })
+    //         ->when($maxPrice !== null, function ($query) use ($maxPrice) {
+    //             $query->where('price', '<=', $maxPrice);
+    //         })
+    //         ->get();
+
+    //     // return response()->json(['products' => $filteredProducts]);
+    //     return view('client.products.product_by_price', compact('filteredProducts'));
+    // }
+    // public function filterProducts(Request $request, $category)
+    // {
+    //     $minPrice = $request->input('min_price');
+    //     $maxPrice = $request->input('max_price');
+
+    //     // Thực hiện truy vấn lấy sản phẩm theo giá và danh mục
+    //     $products = $this->product->getBy($request->all(), $category)
+    //         ->whereBetween('price', [$minPrice, $maxPrice])
+    //         ->get();
+
+    //     return response()->json(['products' => $products]);
     // }
 
 

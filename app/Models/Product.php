@@ -29,18 +29,18 @@ class Product extends Model
     public function getBy($data, $categoryId){
         return $this->whereHas('categories', fn($q)=>$q->where('category_id', $categoryId))->paginate(6);
     }
-    // public function getByPriceRange($categoryId, $minPrice, $maxPrice)
-    // {
-    //     $query = $this->where('category_id', $categoryId);
+    public function getByPriceRange($categoryId, $minPrice, $maxPrice)
+    {
+        $query = $this->categories->where('category_id', $categoryId);
 
-    //     if ($minPrice !== null) {
-    //         $query->where('price', '>=', $minPrice);
-    //     }
+        if ($minPrice !== null) {
+            $query->where('price', '>=', $minPrice);
+        }
 
-    //     if ($maxPrice !== null) {
-    //         $query->where('price', '<=', $maxPrice);
-    //     }
+        if ($maxPrice !== null) {
+            $query->where('price', '<=', $maxPrice);
+        }
 
-    //     return $query->get();
-    // }
+        return $query->get();
+    }
 }

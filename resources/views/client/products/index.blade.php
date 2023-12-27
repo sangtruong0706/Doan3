@@ -10,7 +10,12 @@
             <!-- Price Start -->
             <div class="border-bottom mb-4 pb-4">
                 <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
-                <form id="filterForm">
+                @foreach ($products  as $category)
+                    @php
+                        $id_category = $category->categories->first()->id;
+                    @endphp
+                @endforeach
+                <form id="filterForm{{ $id_category }}" action="{{ route('filter.products', $id_category) }}" method="POST">
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                         <input type="checkbox" class="custom-control-input" checked id="price-all">
                         <label class="custom-control-label" for="price-all">All Price</label>
@@ -31,12 +36,12 @@
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                         <input type="checkbox" class="custom-control-input" id="price-3">
-                        <label class="custom-control-label" for="price-3">$1000 - $1500</label>
+                        <label class="custom-control-label" for="price-3">$1000 - $899500</label>
                         <input type="hidden" id="min_price_3" value="1000">
-                        <input type="hidden" id="max_price_3" value="1500">
+                        <input type="hidden" id="max_price_3" value="899500">
                         {{-- <span class="badge border font-weight-normal">246</span> --}}
                     </div>
-                    <button type="button" class="btn btn-primary" onclick="applyFilter()">Apply Filter</button>
+                    <button type="submit" class="btn btn-primary" >Apply Filter</button>
                 </form>
             </div>
             <!-- Price End -->
@@ -101,4 +106,33 @@
     </div>
 </div>
 <!-- Shop End -->
+{{-- <script>
+    function applyFilter(category) {
+    // Lấy giá trị min và max từ các hidden input
+    var minPrice = $('input[id^="min_price_"]:checked').val();
+    var maxPrice = $('input[id^="max_price_"]:checked').val();
+    var id_category = category;
+
+    // Gửi yêu cầu Ajax đến route đã định nghĩa với thông tin danh mục
+    $.ajax({
+        url: '/filter-products/' + category,
+        type: 'POST',
+        data: {
+            min_price: minPrice,
+            max_price: maxPrice,
+            id_category: id_category,
+        },
+        headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+        success: function (data) {
+            // Xử lý dữ liệu trả về, có thể cập nhật giao diện sản phẩm
+            console.log(data.products);
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+</script> --}}
 @endsection

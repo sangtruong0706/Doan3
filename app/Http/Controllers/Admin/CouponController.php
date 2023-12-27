@@ -35,7 +35,8 @@ class CouponController extends Controller
     {
         $dataCreate = $request->all();
         $this->coupon->create($dataCreate);
-        return redirect()->route('coupon.index')->with(['messages'=> 'Create successfully']);
+        toastr()->success('Create successfully');
+        return redirect()->route('coupon.index');
     }
 
     /**
@@ -63,7 +64,8 @@ class CouponController extends Controller
         $coupon = $this->coupon->findOrFail($id);
         $dataUpdate = $request->all();
         $coupon->update($dataUpdate);
-        return redirect()->route('coupon.index')->with(['messages'=> 'Update successfully']);
+        toastr()->success('Update successfully');
+        return redirect()->route('coupon.index');
 
     }
 
@@ -74,6 +76,7 @@ class CouponController extends Controller
     {
         $coupon = $this->coupon->findOrFail($id);
         $coupon->delete();
-        return redirect()->route('coupon.index')->with(['messages'=> 'Delete '.$coupon->name.' successfully']);
+        toastr()->success('Delete '.$coupon->name.' successfully');
+        return redirect()->route('coupon.index');
     }
 }

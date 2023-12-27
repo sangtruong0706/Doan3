@@ -33,6 +33,7 @@ class CategoryController extends Controller
     {
         $dataCreate = $request->all();
         $category  = $this->category->create($dataCreate);
+        toastr()->success('Create successfully');
         return to_route('category.index')->with(['messages'=> 'Create successfully']);
     }
 
@@ -56,6 +57,7 @@ class CategoryController extends Controller
         $dataUpdate = $request->all();
         $category = $this->category->findOrFail($id);
         $category->update($dataUpdate);
+        toastr()->success('Update successfully');
         return to_route('category.index')->with(['messages'=> 'Update successfully']);
     }
 
@@ -64,6 +66,7 @@ class CategoryController extends Controller
     {
         $category = $this->category->findOrFail($id);
         $category->delete();
+        toastr()->success('Delete successfully');
         return to_route('category.index')->with(['messages'=> 'Delete successfully']);
     }
 }

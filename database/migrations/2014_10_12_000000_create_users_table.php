@@ -23,6 +23,10 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        Schema::table('users', function (Blueprint $table) {
+            // Thêm trường is_active
+            $table->boolean('is_active')->default(0);
+        });
     }
 
     /**

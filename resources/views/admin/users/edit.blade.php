@@ -16,7 +16,12 @@
                     @enderror
                 </div>
                 <div class="col-md-5">
-                    <img src="{{ $user->images ? asset('upload/users'. $user->images->first()->url) : 'upload/users/default.jpg' }}" id="show-image" alt="" style="width: 150px; height:150px; border-radius:50%">
+                    {{-- <img src="{{ $user->images ? asset('upload/users'. $user->images->first()->url) : 'upload/users/default.jpg' }}" id="show-image" alt="" style="width: 150px; height:150px; border-radius:50%"> --}}
+                    @if($user->images && $user->images->first())
+                        <img src="{{ asset('upload/'. $user->images->first()->url) }}" id="show-image" alt="" style="width: 150px; height:150px; border-radius:50%">
+                    @else
+                        <img src="upload/default.jpg" id="show-image" alt="" style="width: 150px; height:150px; border-radius:50%">
+                    @endif
                 </div>
             </div>
 

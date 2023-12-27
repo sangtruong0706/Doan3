@@ -64,8 +64,8 @@ class ProductController extends Controller
             $sizeArray[] = ['size' => $size, 'quantity' => $quantity, 'product_id' => $product->id];
         }
         $this->productDetail->insert($sizeArray);
-
-        return redirect()->route('product.index')->with(['messages' => 'Create product successfully']);
+        toastr()->success('Create successfully');
+        return redirect()->route('product.index');
     }
 
     /**
@@ -90,7 +90,7 @@ class ProductController extends Controller
         $quantityArray = $this->productDetail->where('product_id', $product->id)->get(['size', 'quantity'])->toArray();
 
         return view('admin.product.edit', compact('category', 'product', 'quantityArray', 'allSizes'));
-        
+
     }
 
     /**
@@ -124,8 +124,8 @@ class ProductController extends Controller
         }
         $product->details()->delete();
         $this->productDetail->insert($sizeArray);
-
-        return redirect()->route('product.index')->with(['messages' => 'Update product successfully']);
+        toastr()->success('Update product successfully');
+        return redirect()->route('product.index');
     }
 
     /**
@@ -138,7 +138,8 @@ class ProductController extends Controller
         $product->details()->delete();
         $imageName = $product->images->count()>0 ? $product->images->first()->url : '';
         $this->product->deleteImage( $imageName);
-        return redirect()->route('product.index')->with(['messages' => 'Delete product successfully']);
+        toastr()->success('Delete product successfully');
+        return redirect()->route('product.index');
 
     }
 }
