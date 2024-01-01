@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('namePage', 'Edit Coupons')
 @section('title', 'Edit Coupon '.$coupon->name)
 @section('content')
 <div class="card">

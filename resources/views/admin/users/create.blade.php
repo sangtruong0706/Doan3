@@ -1,8 +1,9 @@
 @extends('admin.layouts.app')
+@section('namePage', 'Create Users')
 @section('title', 'Create User')
 @section('content')
 <div class="card">
-    <h1>Create Role</h1>
+    <h1>Create User</h1>
     <div>
         <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
             @csrf

@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('namePage', 'Edit Users')
 @section('title', 'Edit User'.$user->name)
 @section('content')
 <div class="card">

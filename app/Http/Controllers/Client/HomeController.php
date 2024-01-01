@@ -156,4 +156,7 @@ class HomeController extends Controller
             return redirect('/verifyaccount')->with('incorrect', 'Your OTP is invalid please check your mail settings');
         }
     }
+    public function contact(){
+        return view('client.home.contact');
+    }
 }

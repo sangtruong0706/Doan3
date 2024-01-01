@@ -9,6 +9,7 @@ use App\Http\Requests\Product\CreateProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\ProductDetail;
+use Dflydev\DotAccessData\Util;
 use Laravel\Prompts\Prompt;
 
 class ProductController extends Controller
@@ -24,6 +25,10 @@ class ProductController extends Controller
     {
         $dataProduct = $this->product::latest('id')->paginate(5);
         return view('admin.product.index', compact('dataProduct'));
+    }
+    public function getProductAdmin(){
+        $dataProduct = $this->product::with('images')->get();
+        return response()->json(['data' => $dataProduct]);
     }
 
     /**
@@ -74,7 +79,8 @@ class ProductController extends Controller
     public function show(string $id)
     {
         $product = $this->product->with(['details', 'categories'])->findOrFail($id);
-        return view('admin.product.show', compact('product'));
+        $view = view('admin.product.show', compact('product'))->render();
+        return response()->json(['view' => $view]);
     }
 
     /**
@@ -139,7 +145,8 @@ class ProductController extends Controller
         $imageName = $product->images->count()>0 ? $product->images->first()->url : '';
         $this->product->deleteImage( $imageName);
         toastr()->success('Delete product successfully');
-        return redirect()->route('product.index');
+        // return redirect()->route('product.index');
+        return response()->json(['success' => true]);
 
     }
 }

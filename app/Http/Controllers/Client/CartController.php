@@ -41,6 +41,9 @@ class CartController extends Controller
     public function checkout()
     {
         $user = auth()->user();
+        if(!$user){
+            return to_route('login');
+        }
         return view('client.home.checkout', compact('user'));
     }
     public function handleCheckout(CreateOrderRequest $request)
@@ -49,6 +52,7 @@ class CartController extends Controller
         $dataCreate['user_id'] = auth()->user()->id;
         $dataCreate['order_id'] = random_int(0, 9999);
         $dataCreate['status'] = 'pending';
+        $total = $request->total;
         if ($request->payment == 'money') {
             $result = $this->order->create($dataCreate);
             $couponId = session()->get('coupon_id');
@@ -92,8 +96,8 @@ class CartController extends Controller
             $vnp_TxnRef = $dataCreate['order_id']; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
             $vnp_OrderInfo = "Thanh toán hóa đơn";
             $vnp_OrderType = "billpayment";
-            $vnp_Amount = 10000 * 100;
-            $vnp_Locale = "VN";
+            $vnp_Amount = $total * 100;
+            $vnp_Locale = "EN";
             $vnp_BankCode = "NCB";
             $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
 
@@ -116,11 +120,6 @@ class CartController extends Controller
             if (isset($vnp_BankCode) && $vnp_BankCode != "") {
                 $inputData['vnp_BankCode'] = $vnp_BankCode;
             }
-            // if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
-            //     $inputData['vnp_Bill_State'] = $vnp_Bill_State;
-            // }
-
-
             ksort($inputData);
             $query = "";
             $i = 0;

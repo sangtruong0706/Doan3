@@ -30,7 +30,8 @@ class RoleController extends Controller
         $dataCreate['guard_name']= 'web';
         $role = Role::create($dataCreate);
         $role->permissions()->attach($dataCreate['permission_ids']);
-        return to_route('roles.index')->with(['messages'=> 'Create successfully']);
+        toastr()->success('Role created successfully');
+        return to_route('roles.index');
     }
 
     public function show(string $id)
@@ -54,7 +55,8 @@ class RoleController extends Controller
         $dataUpdate = $request->all();
         $role->update($dataUpdate);
         $role->permissions()->sync($dataUpdate['permission_ids']);
-        return to_route('roles.index')->with(['messages'=> 'Update successfully']);
+        toastr()->success('Role updated successfully');
+        return to_route('roles.index');
     }
 
     /**
@@ -63,6 +65,7 @@ class RoleController extends Controller
     public function destroy(string $id)
     {
         Role::destroy($id);
-        return to_route('roles.index')->with(['messages'=> 'Delete successfully']);
+        toastr()->success('Deleted role successfully');
+        return to_route('roles.index');
     }
 }

@@ -46,7 +46,8 @@ class UserController extends Controller
         $user = $this->user->create($dataCreate);
         $user->images()->create(['url'=> $dataCreate['image']]);
         $user->roles()->attach($dataCreate['role_ids']);
-        return to_route('users.index')->with(['messages' =>'Create user successfully']);
+        toastr()->success('Create user successfully');
+        return to_route('users.index');
     }
 
     /**
@@ -85,7 +86,8 @@ class UserController extends Controller
         $user->images()->delete();
         $user->images()->create(['url'=> $dataUpdate['image']]);
         $user->roles()->sync($dataUpdate['role_ids'] ?? []);
-        return to_route('users.index')->with(['messages' =>'Update user successfully']);
+        toastr()->success('Update user successfully');
+        return to_route('users.index');
     }
 
     /**
@@ -98,7 +100,8 @@ class UserController extends Controller
         $imageName = $user->images->count()>0 ? $user->images->first()->url : '';
         $this->user->deleteImage( $imageName);
         $user->delete();
-        return to_route('users.index')->with(['messages' =>'Delete user successfully']);
+        toastr()->success('Delete user successfully');
+        return to_route('users.index');
 
     }
 }

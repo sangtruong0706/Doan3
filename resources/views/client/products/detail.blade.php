@@ -4,19 +4,23 @@
 <!-- Shop Detail Start -->
 <div class="container-fluid py-5">
     <div class="row px-xl-5">
+        <div class="col-lg-1 pb-5"></div>
         <div class="col-lg-5 pb-5">
-            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+            <div id="product-carousel" class="carousel slide ha_sp_style" data-ride="carousel">
                 <div class="carousel-inner border">
                     <div class="carousel-item active">
                         <img class="img-fluid w-100" src="{{ $productDetail->images->count() > 0 ? asset('upload/'. $productDetail->images->first()->url) : 'upload/default.jpg' }}" alt="" style="height: 478px; width: 320px !important">
                     </div>
+                    <div class="carousel-item">
+                        <img class="img-fluid w-100" src="{{ $productDetail->images->count() > 0 ? asset('upload/'. $productDetail->images->first()->url) : 'upload/default.jpg' }}" alt="" style="height: 478px; width: 320px !important ;transform: scaleX(-1);">
+                    </div>
                 </div>
-                {{-- <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                     <i class="fa fa-2x fa-angle-left text-dark"></i>
                 </a>
                 <a class="carousel-control-next" href="#product-carousel" data-slide="next">
                     <i class="fa fa-2x fa-angle-right text-dark"></i>
-                </a> --}}
+                </a>
             </div>
         </div>
 
@@ -69,7 +73,7 @@
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="tab-pane-1">
                     <h4 class="mb-3">Product Description</h4>
-                    <p>{{ $productDetail->description }}</p>
+                    <div>{{ $productDetail->description }}</div>
                 </div>
                 <div class="tab-pane fade" id="tab-pane-2">
                     <h4 class="mb-3">Additional Information</h4>

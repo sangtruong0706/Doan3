@@ -1,12 +1,10 @@
 @extends('admin.layouts.app')
 @section('title', 'Users')
+@section('namePage', 'List Users')
 @section('content')
 <div class="row">
     <div class="col-12">
         @if (session('messages'))
-            {{-- <div class="alert alert-success text-white my-3" role="alert">
-                <strong>Success!</strong> {{ session('messages') }}
-            </div> --}}
             <div class="alert alert-success alert-dismissible text-white fade show" role="alert">
                 <span class="alert-icon align-middle">
                   <span class="material-icons text-md">
@@ -54,7 +52,7 @@
                       </div>
                     </td>
                     <td class="text-xs font-weight-bold mb-0">
-                        <img src="{{ $item->images->count() > 0 ? asset('upload/'. $item->images->first()->url) : 'upload/default.jpg' }}" alt="">
+                        <img src="{{ $item->images->count() > 0 ? asset('upload/'. $item->images->first()->url) : 'upload/default.jpg' }}" alt="" style="width: 100px; height: 100px; border-radius: 50%;">
                     </td>
                     <td>
                       <p class="text-xs font-weight-bold mb-0">{{ $item->name }}</p>
@@ -65,8 +63,8 @@
                     <td class="align-middle text-center text-sm">
                       <span class="text-xs font-weight-bold mb-0">{{ $item->phone }}</span>
                     </td>
-                    <td class="align-middle">
-                      <a href="{{ route('users.edit', $item->id) }}" class="btn btn-warning">
+                    <td class="align-middle" style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
+                      <a style="margin-right: 12px;" href="{{ route('users.edit', $item->id) }}" class="btn btn-warning">
                         Edit
                       </a>
                       <form action="{{ route('users.destroy', $item->id) }}" method="POST">

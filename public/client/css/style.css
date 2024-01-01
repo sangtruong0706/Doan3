@@ -9582,3 +9582,12 @@ a.text-dark:hover, a.text-dark:focus {
     transform: translateY(-15px);
   }
 }
+.ha_sp_style{
+    height: 478px !important;
+    width: 320px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 292px;
+}

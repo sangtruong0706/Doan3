@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('namePage', 'Edit Category')
 @section('title', 'Edit Category '.$category->name)
 @section('content')
 <div class="card">

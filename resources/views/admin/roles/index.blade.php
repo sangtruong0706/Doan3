@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('namePage', 'List Roles')
 @section('title', 'Roles')
 @section('content')
 <div class="row">
@@ -46,8 +47,8 @@
                     <td class="align-middle text-center text-sm">
                       <span class="badge badge-sm bg-gradient-success">{{ $role->display_name }}</span>
                     </td>
-                    <td class="align-middle">
-                      <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning">
+                    <td class="align-middle" style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
+                      <a style="margin-right: 12px;" href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning">
                         Edit
                       </a>
                       <form action="{{ route('roles.destroy', $role->id) }}" method="POST">

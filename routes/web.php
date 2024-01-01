@@ -1,21 +1,23 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminOrderController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\CouponController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SendMailController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Client\CartController;
+use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\StatisticalController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
-use App\Http\Controllers\Client\HomeController;
-use App\Http\Controllers\Client\CartController;
-use App\Http\Controllers\Client\OrderController;
-use App\Http\Controllers\SendMailController;
 
 Route::get('/', [HomeController::class, 'index'])->name('client.home');
+Route::get('/contact', [HomeController::class, 'contact'])->name('client.contact');
 Route::get('/search-products', [HomeController::class, 'search'])->name('search.products');
 
 Route::get('/products/{category_id}', [ClientProductController::class, 'index'])->name('client.product.index');
@@ -39,7 +41,14 @@ Route::post('/cancel-order/{id}', [OrderController::class, 'cancel'])->name('cli
 Auth::routes();
 // Route::get('/dashboard', function () {
 //     return view('admin.dashboard.index');})->name('dashboard');
-Route::get('/dashboard', [StatisticalController::class, 'dashboard'])->name('dashboard');
+Route::get('/admin/login', [LoginController::class, 'showAdminLoginForm'])->name('admin.login');
+Route::post('/admin-login', [LoginController::class, 'adminLogin'])->name('admin.handleLogin');
+Route::post('/admin-logout', [LoginController::class, 'adminLogout'])->name('admin.handleLogout');
+// Route::middleware(['admin'])->group(function () {
+    Route::get('/dashboard', [StatisticalController::class, 'dashboard'])->name('dashboard');
+// });
+///datatable product routes
+Route::get('/product-admin', [ProductController::class, 'getProductAdmin'])->name('get.product.admin');
 
 Route::resource('roles', RoleController::class);
 Route::resource('users', UserController::class);

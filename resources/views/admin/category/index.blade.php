@@ -1,21 +1,9 @@
 @extends('admin.layouts.app')
 @section('title', 'Category')
+@section('namePage', 'List Category')
 @section('content')
 <div class="row">
     <div class="col-12">
-        @if (session('messages'))
-        <div class="alert alert-success alert-dismissible text-white fade show" role="alert">
-            <span class="alert-icon align-middle">
-              <span class="material-icons text-md">
-              thumb_up_off_alt
-              </span>
-            </span>
-            <span class="alert-text"><strong>Success!</strong> {{ session('messages') }}</span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        @endif
       <div class="card my-4">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
           <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
@@ -54,8 +42,8 @@
                     <td>
                       <p class="text-xs font-weight-bold mb-0">{{ $cate->parent_name }}</p>
                     </td>
-                    <td class="align-middle">
-                      <a href="{{ route('category.edit', $cate->id) }}" class="btn btn-warning">
+                    <td class="align-middle" style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
+                      <a style="margin-right: 12px;" href="{{ route('category.edit', $cate->id) }}" class="btn btn-warning">
                         Edit
                       </a>
                       <form action="{{ route('category.destroy', $cate->id) }}" method="POST">

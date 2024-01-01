@@ -43,18 +43,21 @@ class ProductController extends Controller
     //     // return response()->json(['products' => $filteredProducts]);
     //     return view('client.products.product_by_price', compact('filteredProducts'));
     // }
-    // public function filterProducts(Request $request, $category)
-    // {
-    //     $minPrice = $request->input('min_price');
-    //     $maxPrice = $request->input('max_price');
+    public function filterProducts(Request $request, $category)
+    {
+        $action_filter = $request->input('filterPrice');
+        if ($action_filter == 'increase') {
+            $products_filter_asc = $this->product->getByPriceAsc($category);
+            // return view('client.products.product_filter_asc', compact('products_filter_asc'));
+            $view = view('client.products.product_filter_asc', compact('products_filter_asc'))->render();
+        } else if ($action_filter == 'decrease') {
+            $products_filter_desc = $this->product->getByPriceDesc($category);
+            // return view('client.products.product_filter_desc', compact('products_filter_desc'));
+            $view = view('client.products.product_filter_desc', compact('products_filter_desc'))->render();
 
-    //     // Thực hiện truy vấn lấy sản phẩm theo giá và danh mục
-    //     $products = $this->product->getBy($request->all(), $category)
-    //         ->whereBetween('price', [$minPrice, $maxPrice])
-    //         ->get();
-
-    //     return response()->json(['products' => $products]);
-    // }
+        }
+        return response()->json(['view' => $view]);
+    }
 
 
     public function create()

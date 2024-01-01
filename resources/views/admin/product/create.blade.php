@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('namePage', 'Create Product')
 @section('title', 'Create Product')
 @section('content')
     <div class="card">
@@ -17,7 +18,7 @@
                         @enderror
                     </div>
                     <div class="col-5">
-                        <img src="" id="show-image" alt="" width="300px">
+                        <img src="" id="show-image" alt="" style="width: 150px; height: 200px;">
                     </div>
                 </div>
 
@@ -88,7 +89,7 @@
                 </div>
 
                 <!-- Modal -->
-                <div class="modal fade" id="AddSizeModal" tabindex="-1" aria-labelledby="AddSizeModalLabel"
+                {{-- <div class="modal fade" id="AddSizeModal" tabindex="-1" aria-labelledby="AddSizeModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -105,11 +106,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
         </div>
         <div class="input-group input-group-static mb-4">
             <label name="group" class="ms-0">Category</label>
-            <select name="category_ids[]" class="form-control" multiple>
+            <select name="category_ids[]" class="form-control" >
+                <option value="">---Select the category---</option>
                 @foreach ($category as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                 @endforeach
@@ -120,7 +122,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-submit btn-primary">Submit</button>
+        <button type="submit" class="btn btn-submit btn-primary my-3">Submit</button>
         </form>
     </div>
     </div>

@@ -1,10 +1,16 @@
 @extends('admin.layouts.app')
-@section('title', 'Product')
+@section('namePage', 'List Order')
+@section('title', 'Order')
 @section('content')
-
-<div class="container-fluid pt-5">
-    <div class="col">
-        <div>
+<div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+              <h6 class="text-white text-capitalize ps-3">Order list</h6>
+            </div>
+        </div>
+        <div class="card-body px-0 pb-2">
             <table class="table table-hover">
                 <tr>
                     <th>#</th>
@@ -53,8 +59,15 @@
             </table>
             {{ $orders->links() }}
         </div>
+      </div>
     </div>
 </div>
+{{-- <div class="container-fluid pt-5">
+    <div class="col">
+        <div>
+        </div>
+    </div>
+</div> --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     $(document).ready(function () {

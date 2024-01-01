@@ -9,40 +9,25 @@
         <div class="col-lg-3 col-md-12">
             <!-- Price Start -->
             <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
+                <h5 class="font-weight-semi-bold mb-4">Filter</h5>
                 @foreach ($products  as $category)
                     @php
                         $id_category = $category->categories->first()->id;
                     @endphp
                 @endforeach
-                <form id="filterForm{{ $id_category }}" action="{{ route('filter.products', $id_category) }}" method="POST">
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="price-all">
-                        <label class="custom-control-label" for="price-all">All Price</label>
-                        {{-- <span class="badge border font-weight-normal">1000</span> --}}
+                <form id="filterForm" action="{{ route('filter.products', $id_category) }}" method="POST">
+                    @csrf
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input" id="price-1" value="increase" name="filterPrice">
+                        <label class="custom-control-label" for="price-1">Prices gradually increase</label>
                     </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-1">
-                        <label class="custom-control-label" for="price-1">$0 - $500</label>
-                        <input type="hidden" id="min_price_1" value="0">
-                        <input type="hidden" id="max_price_1" value="500">
+                    <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                        <input type="radio" class="custom-control-input" id="price-2" value="decrease" name="filterPrice">
+                        <label class="custom-control-label" for="price-2">Prices gradually decrease</label>
                     </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-2">
-                        <label class="custom-control-label" for="price-2">$500 - $1000</label>
-                        <input type="hidden" id="min_price_2" value="500">
-                        <input type="hidden" id="max_price_2" value="1000">
-                        {{-- <span class="badge border font-weight-normal">295</span> --}}
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-3">
-                        <label class="custom-control-label" for="price-3">$1000 - $899500</label>
-                        <input type="hidden" id="min_price_3" value="1000">
-                        <input type="hidden" id="max_price_3" value="899500">
-                        {{-- <span class="badge border font-weight-normal">246</span> --}}
-                    </div>
-                    <button type="submit" class="btn btn-primary" >Apply Filter</button>
+                    <button type="button" class="btn btn-primary apply-filter-btn">Apply Filter</button>
                 </form>
+
             </div>
             <!-- Price End -->
 
@@ -50,7 +35,7 @@
         <!-- Shop Sidebar End -->
 
         <!-- Shop Product Start -->
-        <div class="col-lg-9 col-md-12">
+        <div id="filtered-content" class="col-lg-9 col-md-12">
             <div class="row pb-3">
                 <div class="col-12 pb-1">
                     <div class="d-flex align-items-center justify-content-between mb-4">
@@ -106,33 +91,43 @@
     </div>
 </div>
 <!-- Shop End -->
-{{-- <script>
-    function applyFilter(category) {
-    // Lấy giá trị min và max từ các hidden input
-    var minPrice = $('input[id^="min_price_"]:checked').val();
-    var maxPrice = $('input[id^="max_price_"]:checked').val();
-    var id_category = category;
+{{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.apply-filter-btn').on('click', function () {
+            // Lấy giá trị radio được chọn
+            var filterValue = $('input[name="filterPrice"]:checked').val();
 
-    // Gửi yêu cầu Ajax đến route đã định nghĩa với thông tin danh mục
-    $.ajax({
-        url: '/filter-products/' + category,
-        type: 'POST',
-        data: {
-            min_price: minPrice,
-            max_price: maxPrice,
-            id_category: id_category,
-        },
-        headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            // Lấy URL của action từ biểu mẫu
+            var url = $('#filterForm').attr('action');
+
+            // Gửi yêu cầu Ajax
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    _token: $('input[name="_token"]').val(),
+                    filterPrice: filterValue
                 },
-        success: function (data) {
-            // Xử lý dữ liệu trả về, có thể cập nhật giao diện sản phẩm
-            console.log(data.products);
-        },
-        error: function (xhr, status, error) {
-            console.error(error);
-        }
+                success: function (data) {
+                    // Xử lý dữ liệu trả về
+                    if (data.view) {
+                        console.log(data.view);
+                        // Cập nhật nội dung của phần tử có ID là 'filtered-content'
+                        $('#filtered-content').html(data.view);
+                    } else {
+                        console.log('No products found.'); // Xử lý trường hợp không có sản phẩm
+                    }
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                    // Xử lý lỗi nếu cần
+                }
+            });
+        });
     });
-}
-</script> --}}
+</script>
+
+
 @endsection

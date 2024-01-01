@@ -29,6 +29,20 @@ class Product extends Model
     public function getBy($data, $categoryId){
         return $this->whereHas('categories', fn($q)=>$q->where('category_id', $categoryId))->paginate(6);
     }
+    public function getByPriceAsc($categoryId){
+        return $this->whereHas('categories', function($q) use ($categoryId) {
+                $q->where('category_id', $categoryId);
+            })
+            ->orderBy('price', 'asc') // Sắp xếp theo giá tăng dần
+            ->paginate(6);
+    }
+    public function getByPriceDesc($categoryId){
+        return $this->whereHas('categories', function($q) use ($categoryId) {
+                $q->where('category_id', $categoryId);
+            })
+            ->orderBy('price', 'desc') // Sắp xếp theo giá giảm dần
+            ->paginate(6);
+    }
     public function getByPriceRange($categoryId, $minPrice, $maxPrice)
     {
         $query = $this->categories->where('category_id', $categoryId);

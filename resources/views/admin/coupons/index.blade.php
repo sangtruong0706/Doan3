@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('namePage', 'List Coupons')
 @section('title', 'Coupon')
 @section('content')
 <div class="row">
@@ -63,8 +64,8 @@
                         <p class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item->expery_date)->format('Y-m-d') }}</p>
 
                     </td>
-                    <td class="align-middle">
-                      <a href="{{ route('coupon.edit', $item->id) }}" class="btn btn-warning">
+                    <td class="align-middle" style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
+                      <a style="margin-right: 12px;" href="{{ route('coupon.edit', $item->id) }}" class="btn btn-warning">
                         Edit
                       </a>
                       <form action="{{ route('coupon.destroy', $item->id) }}" method="POST">
